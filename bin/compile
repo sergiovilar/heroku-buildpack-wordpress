@@ -100,7 +100,7 @@ cd ${BUILD_DIR}
 # Setup
 cat >>bin/setup.sh <<EOF
 #!/usr/bin/env bash
-
+composer install
 cp -rf /app/config/* /app
 
 cp /app/vendor/php/php/fpm/status.html /app/public/status.html
@@ -131,8 +131,8 @@ cat >>bin/start.sh <<EOF
 echo "Starting nginx"
 setup.sh
 (tail -qF -n 0 /app/vendor/nginx/logs/*.log /app/vendor/php/var/log/*.log &)
-php-fpm
-nginx
+/app/vendor/php/sbin/php-fpm
+/app/vendor/nginx/sbin/nginx
 EOF
 chmod +x bin/start.sh
 
